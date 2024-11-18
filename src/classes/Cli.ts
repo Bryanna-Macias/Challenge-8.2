@@ -171,8 +171,8 @@ class Cli {
           parseInt(answers.year),
           parseInt(answers.weight),
           parseInt(answers.topSpeed),
+          [], // Assuming wheels can be passed here if needed
           parseInt(answers.towingCapacity),
-          [] // Assuming wheels can be passed here if needed
         );
         this.vehicles.push(truck);
         this.selectedVehicleVin = truck.vin;
@@ -339,7 +339,7 @@ class Cli {
               }
             } else if (answers.action === 'Perform wheelie') {
               if (selectedVehicle instanceof Motorbike) {
-                selectedVehicle.performWheelie();
+                selectedVehicle.wheelie();
               } else {
                 console.log(`${selectedVehicle.make} cannot perform a wheelie.`);
               }
@@ -355,11 +355,36 @@ class Cli {
   }
 
   // method to start the application
-  start() {
-    while (!this.exit) {
-      this.chooseVehicle();
-    }
+  // startCli() {
+  //   while (!this.exit) {
+  //     this.chooseVehicle();
+  //   }
+  // }
+
+
+  startCli(): void {
+    inquirer
+      .prompt([
+        {
+          type: 'list',
+          name: 'CreateOrSelect',
+          message:
+            'Would you like to create a new vehicle or perform an action on an existing vehicle?',
+          choices: ['Create a new vehicle', 'Select an existing vehicle'],
+        },
+      ])
+      .then((answers) => {
+        // check if the user wants to create a new vehicle or select an existing vehicle
+        if (answers.CreateOrSelect === 'Create a new vehicle') {
+          this.createVehicle();
+        } else {
+          this.chooseVehicle();
+        }
+      });
   }
+
+
+
 }
 
 export default Cli;

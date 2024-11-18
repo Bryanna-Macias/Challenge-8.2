@@ -17,9 +17,16 @@ class Motorbike extends Vehicle {
   // Create a constructor that accepts the properties of the Motorbike class
   constructor(vin: string, color: string, make: string, model: string, year: number, weight: number, topSpeed: number, wheels: Wheel[]) {
     // Call the constructor of the parent class, Vehicle
-    super(vin, color, make, model, year, weight, topSpeed);
-    
+    super();
+
     // Initialize the properties of the Motorbike class
+    this.vin = vin;
+    this.color = color;
+    this.make = make;
+    this.model = model;
+    this.year = year;
+    this.weight = weight;
+    this.topSpeed = topSpeed;
     this.wheels = wheels.length === 2 ? wheels : Array(2).fill(new Wheel()); // Ensure there are 2 Wheel objects
   }
 
@@ -29,10 +36,10 @@ class Motorbike extends Vehicle {
   }
 
   // Override the printDetails method from the Vehicle class
-  printDetails(): void {
+  override printDetails(): void {
     // Call the printDetails method of the parent class
     super.printDetails();
-    
+
     // Log the details of the Motorbike
     console.log(`Motorbike Details:`);
     console.log(`VIN: ${this.vin}`);
